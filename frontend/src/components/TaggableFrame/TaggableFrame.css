@@ -1,0 +1,37 @@
+.frame {
+  position: relative;
+  width: 500px;
+  height: 300px;
+  background-color: #e0e0e0;
+  border: 1px solid #999;
+}
+
+.tag-container {
+  position: absolute;
+}
+
+.tag-box {
+  width: 40px;
+  height: 40px;
+  border: 2px solid blue;
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+.dropdown {
+  position: absolute;
+  left: 50px;
+  top: 0;
+  background-color: white;
+  border: 1px solid #999;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.dropdown-item {
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #d0e7ff;
+}
