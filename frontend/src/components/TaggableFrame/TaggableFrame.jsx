@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./TaggableFrame.css";
+import carterFuneralImg from "../../assets/carterFuneral.jpg";
 
 const names = ["Alice", "Bob", "Charlie", "Dana"];
 
@@ -11,10 +12,10 @@ function TaggableFrame() {
     if (!frameRef.current) return;
 
     const rect = frameRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
+    const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
 
-    setTag({ x, y, selected: null });
+    setTag({ x: xPercent, y: yPercent, selected: null });
   };
 
   useEffect(() => {
@@ -29,10 +30,16 @@ function TaggableFrame() {
 
   return (
     <div ref={frameRef} onClick={handleClick} className="frame">
+      <img 
+        src={carterFuneralImg}
+        alt="Taggable"
+        className="frame-img"
+      />
+
       {tag && (
         <div
           className="tag-container"
-          style={{ left: tag.x - 20, top: tag.y - 20 }}
+          style={{ left: `${tag.x}%`, top: `${tag.y}%`, transform: "translate(-50%, -50%)" }}
         >
           <div className="tag-box"></div>
           <div className="dropdown">
