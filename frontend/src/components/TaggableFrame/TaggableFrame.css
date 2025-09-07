@@ -1,7 +1,7 @@
 .frame {
   position: relative;
   display: inline-block;
-  max-width: 1200px;
+  max-width: min(1200px, 90%);
 }
 
 .frame-img {
@@ -15,16 +15,13 @@
 }
 
 .tag-box {
-  width: 40px;
-  height: 40px;
-  border: 2px solid blue;
-  background-color: rgba(0, 0, 255, 0.1);
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgba(250, 250, 250, 0.1);
 }
 
 .dropdown {
   position: absolute;
-  left: calc(100% + 10px);
-  top: 0;
+  top: 100%;
   background-color: white;
   border: 1px solid #999;
   border-radius: 4px;

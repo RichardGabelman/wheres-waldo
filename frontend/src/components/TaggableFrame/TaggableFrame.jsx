@@ -2,7 +2,22 @@ import { useEffect, useRef, useState } from "react";
 import "./TaggableFrame.css";
 import carterFuneralImg from "../../assets/carterFuneral.jpg";
 
-const names = ["Alice", "Bob", "Charlie", "Dana"];
+const names = [
+  "Al Gore",
+  "Barack Obama",
+  "Bill Clinton",
+  "Donald Trump",
+  "Doug Emhoff",
+  "George W. Bush",
+  "Hillary Clinton",
+  "Jill Biden",
+  "Joe Biden",
+  "Kamala Harris",
+  "Laura Bush",
+  "Melania Trump",
+  "Mike Pence",
+];
+const TAG_BOX_SIZE = 0.07; // % of image width
 
 function TaggableFrame() {
   const frameRef = useRef(null);
@@ -12,10 +27,11 @@ function TaggableFrame() {
     if (!frameRef.current) return;
 
     const rect = frameRef.current.getBoundingClientRect();
+    const boxSize = rect.width * TAG_BOX_SIZE;
     const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
     const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
 
-    setTag({ x: xPercent, y: yPercent, selected: null });
+    setTag({ x: xPercent, y: yPercent, boxSize, selected: null });
   };
 
   useEffect(() => {
@@ -30,18 +46,21 @@ function TaggableFrame() {
 
   return (
     <div ref={frameRef} onClick={handleClick} className="frame">
-      <img 
-        src={carterFuneralImg}
-        alt="Taggable"
-        className="frame-img"
-      />
+      <img src={carterFuneralImg} alt="Taggable" className="frame-img" />
 
       {tag && (
         <div
           className="tag-container"
-          style={{ left: `${tag.x}%`, top: `${tag.y}%`, transform: "translate(-50%, -50%)" }}
+          style={{
+            left: `${tag.x}%`,
+            top: `${tag.y}%`,
+            transform: "translate(-50%, -50%)",
+          }}
         >
-          <div className="tag-box"></div>
+          <div
+            className="tag-box"
+            style={{ width: `${tag.boxSize}px`, height: `${tag.boxSize}px` }}
+          ></div>
           <div className="dropdown">
             {names.map((name) => (
               <div
