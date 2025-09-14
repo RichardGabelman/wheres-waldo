@@ -19,4 +19,6 @@ model Character {
   yPercent Float
   imageId  Int
   image    Image  @relation(fields: [imageId], references: [id])
+
+  @@unique([name, imageId])
 }
