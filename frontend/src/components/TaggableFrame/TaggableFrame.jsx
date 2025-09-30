@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import "./TaggableFrame.css";
 import carterFuneralImg from "../../assets/carterFuneral.jpg";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+// TODO: Get names dynamically through getCharacters api endpoint
 const names = [
   "Al Gore",
   "Barack Obama",
@@ -66,7 +69,26 @@ function TaggableFrame() {
               <div
                 key={name}
                 className="dropdown-item"
-                onClick={() => setTag({ ...tag, selected: name })}
+                onClick={async () => {
+                  setTag({ ...tag, selected: name });
+
+                  try {
+                    const res = await fetch(`${API_URL}/game/guess`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        characterName: name,
+                        xPercent: tag.x,
+                        yPercent: tag.y,
+                      }),
+                    });
+
+                    const data = await res.json();
+                    console.log("Guess result:", data);
+                  } catch (err) {
+                    console.error("Error submitting guess:", err);
+                  }
+                }}
               >
                 {name}
               </div>
