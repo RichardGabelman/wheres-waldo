@@ -5,7 +5,8 @@ async function submitGuess(req, res, next) {
   const { characterName, xPercent, yPercent } = req.body;
 
   try {
-    const character = await prisma.character.findUnique({
+    // Change to findUnique and pass imageId if more than 1 image
+    const character = await prisma.character.findFirst({
       where: { name: characterName }
     });
 

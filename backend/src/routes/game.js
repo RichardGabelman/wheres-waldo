@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.use("/guess", gameController.submitGuess);
 
-module.exports(router);
+module.exports = router;

@@ -8,4 +8,4 @@ router.use("/game", gameRouter);
 // TODO
 // router.get("/characters", getCharacters);
 
-module.exports(router);
+module.exports = router;
