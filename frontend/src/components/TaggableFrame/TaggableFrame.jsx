@@ -36,6 +36,7 @@ function TaggableFrame() {
     const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
     const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
 
+    setErrorMessage(null);
     setTag({ x: xPercent, y: yPercent, boxSize, selected: null });
   };
 
@@ -43,6 +44,7 @@ function TaggableFrame() {
     const handleOutsideClick = (e) => {
       if (frameRef.current && !frameRef.current.contains(e.target)) {
         setTag(null);
+        setErrorMessage(null);
       }
     };
     document.addEventListener("mousedown", handleOutsideClick);
