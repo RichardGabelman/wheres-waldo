@@ -25,6 +25,7 @@ const TAG_BOX_SIZE = 0.07; // % of image width
 function TaggableFrame() {
   const frameRef = useRef(null);
   const [tag, setTag] = useState(null);
+  const [correctGuesses, setCorrectGuesses] = useState([]);
 
   const handleClick = (e) => {
     if (!frameRef.current) return;
@@ -51,6 +52,21 @@ function TaggableFrame() {
     <div ref={frameRef} onClick={handleClick} className="frame">
       <img src={carterFuneralImg} alt="Taggable" className="frame-img" />
 
+      {correctGuesses.map((guess) => (
+        <div
+          key={guess.name}
+          className="marker"
+          style={{
+            left: `${guess.x}%`,
+            top: `${guess.y}%`,
+            transform: "translate(-50%, -50%)",
+          }}
+          title={guess.name}
+        >
+          ✓
+        </div>
+      ))}
+
       {tag && (
         <div
           className="tag-container"
@@ -65,34 +81,43 @@ function TaggableFrame() {
             style={{ width: `${tag.boxSize}px`, height: `${tag.boxSize}px` }}
           ></div>
           <div className="dropdown">
-            {names.map((name) => (
-              <div
-                key={name}
-                className="dropdown-item"
-                onClick={async () => {
-                  setTag({ ...tag, selected: name });
+            {names
+              .filter((n) => !correctGuesses.some((g) => g.name === n))
+              .map((name) => (
+                <div
+                  key={name}
+                  className="dropdown-item"
+                  onClick={async () => {
+                    setTag({ ...tag, selected: name });
 
-                  try {
-                    const res = await fetch(`${API_URL}/game/guess`, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        characterName: name,
-                        xPercent: tag.x,
-                        yPercent: tag.y,
-                      }),
-                    });
+                    try {
+                      const res = await fetch(`${API_URL}/game/guess`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          characterName: name,
+                          xPercent: tag.x,
+                          yPercent: tag.y,
+                        }),
+                      });
 
-                    const data = await res.json();
-                    console.log("Guess result:", data);
-                  } catch (err) {
-                    console.error("Error submitting guess:", err);
-                  }
-                }}
-              >
-                {name}
-              </div>
-            ))}
+                      const data = await res.json();
+                      console.log("Guess result:", data);
+
+                      if (data.correct) {
+                        setCorrectGuesses((prev) => [
+                          ...prev,
+                          { name, x: tag.x, y: tag.y },
+                        ]);
+                      }
+                    } catch (err) {
+                      console.error("Error submitting guess:", err);
+                    }
+                  }}
+                >
+                  {name}
+                </div>
+              ))}
           </div>
         </div>
       )}

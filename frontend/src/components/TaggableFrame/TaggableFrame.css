@@ -36,3 +36,17 @@
 .dropdown-item:hover {
   background-color: #d0e7ff;
 }
+
+.marker {
+  position: absolute;
+  background-color: rgba(0, 255, 0, 0.7);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  pointer-events: none;
+}
