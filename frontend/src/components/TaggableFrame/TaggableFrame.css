@@ -50,3 +50,9 @@
   font-weight: bold;
   pointer-events: none;
 }
+
+.error-message {
+  background-color: red;
+  color: white;
+  padding: 5%;
+}

@@ -26,6 +26,7 @@ function TaggableFrame() {
   const frameRef = useRef(null);
   const [tag, setTag] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleClick = (e) => {
     if (!frameRef.current) return;
@@ -109,6 +110,9 @@ function TaggableFrame() {
                           ...prev,
                           { name, x: tag.x, y: tag.y },
                         ]);
+                        setErrorMessage(null);
+                      } else {
+                        setErrorMessage(data.message || "Try again!");
                       }
                     } catch (err) {
                       console.error("Error submitting guess:", err);
@@ -118,6 +122,11 @@ function TaggableFrame() {
                   {name}
                 </div>
               ))}
+              {errorMessage && (
+                <div className="error-message">
+                  {errorMessage}
+                </div>
+              )}
           </div>
         </div>
       )}
