@@ -80,7 +80,7 @@ function TaggableFrame() {
             className="tag-box"
             style={{ width: `${tag.boxSize}px`, height: `${tag.boxSize}px` }}
           ></div>
-          <div className="dropdown">
+          <div className="dropdown" onClick={(e) => e.stopPropagation()}>
             {names
               .filter((n) => !correctGuesses.some((g) => g.name === n))
               .map((name) => (
