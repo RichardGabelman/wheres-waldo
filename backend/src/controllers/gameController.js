@@ -1,6 +1,16 @@
 const prisma = require("../db/prisma");
 const { verifyCharacterLocation } = require("../services/gameService");
 
+async function startSession(req, res, next) {
+  try {
+    const session = await prisma.session.create();
+
+    res.status(201).json(session);
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function submitGuess(req, res, next) {
   const { characterName, xPercent, yPercent } = req.body;
 
@@ -25,5 +35,5 @@ async function submitGuess(req, res, next) {
   }
 }
 
-module.exports = { submitGuess };
+module.exports = { startSession, submitGuess };
 
