@@ -20,5 +20,15 @@ model Character {
   imageId  Int
   image    Image  @relation(fields: [imageId], references: [id])
 
+  foundInSessions Session[] @relation("FoundCharacters")
+
   @@unique([name, imageId])
+}
+
+model Session {
+  id         Int         @id @default(autoincrement())
+  startTime  DateTime    @default(now())
+  endTime    DateTime?
+  completed  Boolean     @default(false)
+  foundChars Character[] @relation("FoundCharacters")
 }
