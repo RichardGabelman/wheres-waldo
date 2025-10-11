@@ -7,7 +7,12 @@ function GamePage() {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
+    let started = false;
+
     async function startSession() {
+      if (started) return; // prevent duplicate calls in StrictMode
+      started = true;
+
       try {
         const res = await fetch(`${API_URL}/game/start-session`, {
           method: "POST",
