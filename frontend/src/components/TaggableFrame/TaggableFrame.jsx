@@ -22,7 +22,7 @@ const names = [
 ];
 const TAG_BOX_SIZE = 0.07; // % of image width
 
-function TaggableFrame() {
+function TaggableFrame({ sessionId }) {
   const frameRef = useRef(null);
   const [tag, setTag] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
@@ -98,6 +98,7 @@ function TaggableFrame() {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
+                          sessionId,
                           characterName: name,
                           xPercent: tag.x,
                           yPercent: tag.y,
@@ -105,7 +106,6 @@ function TaggableFrame() {
                       });
 
                       const data = await res.json();
-                      console.log("Guess result:", data);
 
                       if (data.correct) {
                         setCorrectGuesses((prev) => [

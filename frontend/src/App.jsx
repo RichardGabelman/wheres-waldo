@@ -1,10 +1,10 @@
 import "./App.css";
-import TaggableFrame from "./components/TaggableFrame/TaggableFrame";
+import GamePage from "./components/GamePage/GamePage";
 
 function App() {
   return (
     <>
-      <TaggableFrame />
+      <GamePage />
     </>
   );
 }
